@@ -61,15 +61,18 @@ def pay():
     
     for item in paired_order:
         global items, quantity
-        items += f'{item}, '
-        quantity += f'{paired_order[item]}, '
+        items += f'{item}' + ' '
+        quantity += f'{paired_order[item]}' + ' '
+        Q = paired_order[item]
+        #Update item stock
+        cursor.execute("""update items set stokBarang = stokBarang - ?
+            where namaBarang = ?""", (Q, item))
        
     trDate = today.strftime("%d/%m/%Y")
 
-    print(items)
+    #Inserting transaction record
     cursor.execute("""insert into orderan(itemList, quantity, totalPrice, transactionDate)
-        values(:items, :quantity, :price, :trDate) 
-        """)
+        values(?, ?, ?, ?);""", (items, quantity, price, trDate))
 
     connect.commit()
     connect.close()
