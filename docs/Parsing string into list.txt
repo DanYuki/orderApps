@@ -1,0 +1,7 @@
+Docs :
+
+** Parsing from string into list 
+(Separated by commas)
+
+items = "A, B, C"
+itemsList = items.split(",")
