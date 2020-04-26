@@ -1,17 +1,17 @@
 from tkinter import *
 import sqlite3
 from tkinter import messagebox
+from datetime import date
 
 root = Tk()
 root.title("OrderApps")
 root.iconbitmap("assets/icon/shopbag.ico")
 root.geometry("400x400")
 
-'''
-db = sqlite3.connect("database.db")
+connect = sqlite3.connect("database.db")
+cursor = connect.cursor()
 
-cr = db.cursor()
-'''
+today = date.today()
 
 menuList = ["Minyak 1Kg", "Gula 1Kg", "Kopi sachet"]
 menuPrice = {
@@ -22,6 +22,8 @@ menuPrice = {
 ordered_item = []
 ordered_quantity = []
 paired_order = {}
+items = ""
+quantity = ""
 
 def add(name):
     if name == "Minyak 1Kg":
@@ -41,6 +43,7 @@ def add(name):
         entry3.delete(0, END)
 
 def show():
+    global price
     for x in range(len(ordered_item)):
         x - 1
         if ordered_item[x] in paired_order:
@@ -53,6 +56,24 @@ def show():
 
 def pay():
     messagebox.showinfo("Pembayaran", "Pembelian sukses")
+    connect = sqlite3.connect("database.db")
+    cursor = connect.cursor()
+    
+    for item in paired_order:
+        global items, quantity
+        items += f'{item}, '
+        quantity += f'{paired_order[item]}, '
+       
+    trDate = today.strftime("%d/%m/%Y")
+
+    print(items)
+    cursor.execute("""insert into orderan(itemList, quantity, totalPrice, transactionDate)
+        values(:items, :quantity, :price, :trDate) 
+        """)
+
+    connect.commit()
+    connect.close()
+
     root.destroy()
 
 Label(root, text="Daftar Menu").grid(row=0, column=0)
@@ -78,5 +99,7 @@ Button(root, text="Show Belanjaan", command=show, width=15).grid(row=4, column=0
 container_belanjaan = Frame(root, bg='white', bd=3)
 container_belanjaan.grid(row=5, column=0, columnspan=3)
 Button(root, text="Bayar", command=pay, width=15).grid(row=6, column=0)
+
+connect.close()
 
 root.mainloop()
