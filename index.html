@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='stylesheet' href='style.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Apps</title>
+    <script src="main.js"></script>
+    <script src="https://kit.fontawesome.com/8d0741330a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <h2 class="title">Daftar Menu</h2>
+        <div class="apps-menu">
+             <div id="menu-item1" class="form">
+                <label for="item1">Item 1 :</label>
+                <input type="text" name="item1" id="quantity-item1" value="0">
+                <div class="common-btn quantity-btn" onclick="quantityModifier('+', 'quantity-item1')">+</div>
+                <div class="common-btn quantity-btn" onclick="quantityModifier('-', 'quantity-item1')">-</div>
+                <div class="common-btn quantity-btn" onclick="addToCart('quantity-item1','Item 1')"><i class="fas fa-cart-plus"></i></div>
+            </div>
+            <div id="menu-item2" class="form">
+                <label for="item2" >Item 2 :</label>
+                <input type="text" name="item2" id="quantity-item2" value="0">
+                <div class="common-btn quantity-btn" onclick="quantityModifier('+', 'quantity-item2')">+</div>
+                <div class="common-btn quantity-btn" onclick="quantityModifier('-', 'quantity-item2')">-</div>
+                <div class="common-btn quantity-btn" onclick="addToCart('quantity-item2', 'Item 2')"><i class="fas fa-cart-plus"></i></div>
+             </div>
+               <div id="payment-sect">
+                <div class="common-btn" id="show-btn" onclick="showItems()">Show Belanjaan</div> <br>
+                <div id="item-list"></div>
+                <div class="common-btn" id="pay-btn">Bayar</div> <br>
+            </div>
+    </div>
+</body>
+</html>
